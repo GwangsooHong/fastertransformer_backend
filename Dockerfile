@@ -1,7 +1,7 @@
 
 
-ARG BASE_IMAGE=nvcr.io/nvidia/tritonserver:21.02-py3
-ARG SDK_IMAGE=nvcr.io/nvidia/tritonserver:21.02-py3-sdk
+ARG BASE_IMAGE=nvcr.io/nvidia/tritonserver:21.04-py3
+ARG SDK_IMAGE=nvcr.io/nvidia/tritonserver:21.04-py3-sdk
 
 FROM ${SDK_IMAGE} AS sdk_image
 
@@ -123,8 +123,8 @@ RUN pip3 install --upgrade wheel setuptools && \
 RUN go get github.com/golang/protobuf/protoc-gen-go && \
         go get google.golang.org/grpc
 
-COPY --from=sdk_image /workspace/install/python/tritonclient-2.7.0-py3-none-manylinux1_x86_64.whl /tmp/
-RUN pip3 install --upgrade /tmp/tritonclient-2.7.0-py3-none-manylinux1_x86_64.whl[all]
+COPY --from=sdk_image /workspace/install/python/tritonclient-2.9.0-py3-none-manylinux1_x86_64.whl /tmp/
+RUN pip3 install --upgrade /tmp/tritonclient-2.9.0-py3-none-manylinux1_x86_64.whl[all]
 
 RUN mkdir /opt/tritonserver/backends/transformer && chmod 777 /opt/tritonserver/backends/transformer
 
