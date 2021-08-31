@@ -62,6 +62,17 @@ cd apex
 pip install -v --disable-pip-version-check --no-cache-dir --global-option="--cpp_ext" --global-option="--cuda_ext" ./
 ```
 
+* Build FT
+Download FasterTransformer into fastertransformer_backend directory.
+
+```bash
+cd $WORKSPACE/fastertransformer_backend
+unzip -d FasterTransformer.zip
+cd FasterTransformer
+mkdir build && cd build
+cmake -DSM=80 -DCMAKE_BUILD_TYPE=Release .. && make -j22 #cmake -DSM=80 -DCMAKE_BUILD_TYPE=Debug .. && make -j22
+```
+
 * Build FT backend
 
 ```bash

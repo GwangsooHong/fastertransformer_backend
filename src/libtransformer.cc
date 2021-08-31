@@ -823,7 +823,8 @@ void BroadcastInputTensors(std::shared_ptr<std::vector<Tensor>>* input_tensors)
 
       MPICHECK(MPI_Bcast(&(length), 1, MPI_INT64_T, 0, MPI_COMM_WORLD));
 
-      MPICHECK(MPI_Bcast((*input_tensors)->at(i).data, batch_size * length, MPI_UINT32_T, 0, MPI_COMM_WORLD));
+      //MPICHECK(MPI_Bcast((*input_tensors)->at(i).data, batch_size * length, MPI_UINT32_T, 0, MPI_COMM_WORLD));
+      MPICHECK(MPI_Bcast(const_cast<void*>(reinterpret_cast<const void*>((*input_tensors)->at(i).data)), batch_size * length, MPI_UINT32_T, 0, MPI_COMM_WORLD));
 
     }
   }
