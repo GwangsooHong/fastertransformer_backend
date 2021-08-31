@@ -114,12 +114,12 @@ docker push github_or_gitlab/repo_name/image_name:latest
 * Run servning directly
 
 ```bash
-cp $WORKSPACE/fastertransformer_backend/build/libtriton_fastertransformer.so $WORKSPACE/fastertransformer_backend/build/lib/libtransformer-shared.so /opt/tritonserver/backends/fastertransformer
+cp $WORKSPACE/fastertransformer_backend/build/libtriton_fastertransformer.so $WORKSPACE/fastertransformer_backend/FasterTransformer/build/lib/libtransformer-shared.so /opt/tritonserver/backends/fastertransformer
 cd $WORKSPACE && ln -s server/qa/common .
 # Recommend to modify the SERVER_TIMEOUT of common/util.sh to longer time
 cd $WORKSPACE/fastertransformer_backend/build/
 # bash $WORKSPACE/fastertransformer_backend/tools/run_server.sh # This method fails since we add MPI features
-mpirun -n 1 /opt/tritonserver/bin/tritonserver --model-repository=$WORKSPACE/fastertransformer_backend/all_models/ &
+mpirun -n 1  --allow-run-as-root /opt/tritonserver/bin/tritonserver --model-repository=$WORKSPACE/fastertransformer_backend/all_models/ &
 bash $WORKSPACE/fastertransformer_backend/tools/run_client.sh
 python _deps/repo-ft-src/sample/pytorch/utils/convert_gpt_token.py --out_file=triton_out # Used for checking result
 ```
